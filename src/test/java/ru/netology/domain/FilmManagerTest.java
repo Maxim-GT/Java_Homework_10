@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class FilmManagerTest {
 
-    FilmManager repo = new FilmManager();
-    FilmManager manager = new FilmManager(repo);
+    FilmManager manager = new FilmManager();
     FilmItem item1 = new FilmItem("Бладшот");
     FilmItem item2 = new FilmItem("Вперед");
     FilmItem item3 = new FilmItem("Отель «Белград»");
@@ -16,36 +15,34 @@ public class FilmManagerTest {
     FilmItem item6 = new FilmItem("Тролли.Мировой тур");
     FilmItem item7 = new FilmItem("Номер один");
     FilmItem item8 = new FilmItem("Звездные войны");
+    FilmItem item9 = new FilmItem("Гладиатор");
+    FilmItem item10 = new FilmItem("Мадагаскар");
 
-    @Test
-    public void test() {
-        FilmManager manager = new FilmManager(10);
-        manager.save(item1);
-        manager.save(item2);
-        manager.save(item3);
-        manager.save(item4);
-        manager.save(item5);
-        manager.save(item6);
-        manager.save(item7);
-
-        FilmItem[] expected = {item1, item2, item3, item4, item5, item6, item7};
-        FilmItem[] actual = manager.getItems();
-
-        Assertions.assertArrayEquals(expected, actual);
+    @BeforeEach
+    public void setup() {
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+        manager.addNewFilm(item4);
+        manager.addNewFilm(item5);
+        manager.addNewFilm(item6);
+        manager.addNewFilm(item7);
+        manager.addNewFilm(item8);
+        manager.addNewFilm(item9);
+        manager.addNewFilm(item10);
     }
 
     @Test
     public void shouldAddNewFilm() {
-        FilmManager manager = new FilmManager(10);
-        manager.save(item1);
-        manager.save(item2);
-        manager.save(item3);
-        manager.save(item4);
-        manager.save(item5);
-        manager.save(item6);
-        manager.save(item7);
+        FilmManager manager = new FilmManager();
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+        manager.addNewFilm(item4);
+        manager.addNewFilm(item5);
+        manager.addNewFilm(item6);
+        manager.addNewFilm(item7);
         manager.addNewFilm(item8);
-
         FilmItem[] expected = {item1, item2, item3, item4, item5, item6, item7, item8};
         FilmItem[] actual = manager.getItems();
 
@@ -55,8 +52,17 @@ public class FilmManagerTest {
     @Test
     public void shouldShowInOrder() {
         FilmManager manager = new FilmManager();
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+        manager.addNewFilm(item4);
+        manager.addNewFilm(item5);
+        manager.addNewFilm(item6);
+        manager.addNewFilm(item7);
+        manager.addNewFilm(item8);
         manager.findAll();
-        FilmItem[] expected = {item1, item2, item3, item4, item5, item6, item7};
+
+        FilmItem[] expected = {item1, item2, item3, item4, item5, item6, item7, item8};
         FilmItem[] actual = manager.getItems();
 
         Assertions.assertArrayEquals(expected, actual);
@@ -65,6 +71,11 @@ public class FilmManagerTest {
     @Test
     public void shouldShowInLimitedOrder() {
         FilmManager manager = new FilmManager(5);
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+        manager.addNewFilm(item4);
+        manager.addNewFilm(item5);
         manager.findAll();
         FilmItem[] expected = {item1, item2, item3, item4, item5};
         FilmItem[] actual = manager.getItems();
@@ -73,19 +84,35 @@ public class FilmManagerTest {
 
     }
 
-    @BeforeEach
-    public void setup() {
-        manager.add(item1);
-        manager.add(item2);
-        manager.add(item3);
-    }
-
     @Test
     public void shouldReverseItems() {
         FilmManager manager = new FilmManager();
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+        manager.addNewFilm(item4);
+        manager.addNewFilm(item5);
+        manager.addNewFilm(item6);
+        manager.addNewFilm(item7);
+        manager.addNewFilm(item8);
         manager.findLast();
-        FilmItem[] expected = {item3,item2,item1};
-        FilmItem[] actual = manager.getItems();
+
+        FilmItem[] expected = {item8, item7, item6, item5, item4, item3, item2, item1};
+        FilmItem[] actual = manager.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldReverseLimitedItems() {
+        FilmManager manager = new FilmManager(5);
+        manager.findLast();
+        manager.addNewFilm(item1);
+        manager.addNewFilm(item2);
+        manager.addNewFilm(item3);
+
+        FilmItem[] expected = {item3, item2, item1};
+        FilmItem[] actual = manager.findLast();
 
         Assertions.assertArrayEquals(expected, actual);
     }

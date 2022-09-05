@@ -1,16 +1,16 @@
 package ru.netology.domain;
 public class FilmItem {
-    private String item;
-    public FilmItem (String item) {
-        this.item = item;
+    private String name;
+    public FilmItem (String name) {
+        this.name = name;
     }
 
 
     public String getItems() {
-        return item;
+        return name;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setItems(String name) {
+        this.name = name;
     }
 }

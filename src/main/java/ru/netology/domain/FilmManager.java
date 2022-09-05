@@ -1,38 +1,21 @@
 package ru.netology.domain;
 
 public class FilmManager {
-    FilmItem newName;
-    int limit = 7;
+    private int limit;
 
-    private FilmManager repo;
-
-    public FilmManager(FilmManager repo) {
-        this.repo = repo;
+    public FilmItem[] getItems() {
+        return items;
     }
-
-    public void add(FilmItem item) {
-        repo.save(item);
-    }
-
-
-    private FilmItem[] items = new FilmItem[0];
 
     public FilmManager(int limit) {
         this.limit = limit;
     }
 
     public FilmManager() {
-        this.limit = limit;
+        limit = 10;
     }
 
-    public void save(FilmItem item) {
-        FilmItem[] tmp = new FilmItem[items.length + 1];
-        for (int i = 0; i < items.length; i++) {
-            tmp[i] = items[i];
-        }
-        tmp[tmp.length - 1] = item;
-        items = tmp;
-    }
+    private FilmItem[] items = new FilmItem[0];
 
     public void addNewFilm(FilmItem item) {
         FilmItem[] tmp = new FilmItem[items.length + 1];
@@ -43,45 +26,22 @@ public class FilmManager {
         items = tmp;
     }
 
-    public FilmItem[] getItems() {
-        return items;
-    }
+    public FilmItem[] findAll() {
 
-    public void findAll() {
-        String[] items = {
-                "Бладшот",
-                "Вперед",
-                "Отель «Белград»",
-                "Джентельмены",
-                "Человек-невидимка",
-                "Тролли. Мировой тур",
-                "Номер один"
-        };
-        for (int i = 0; i < limit; i++) {
-            System.out.println(items[i]);
-        }
+        return items;
     }
 
     public FilmItem[] findLast() {
         int resultLength;
-        if (limit == 5) {
-            resultLength = 5;
+        if (limit < items.length) {
+            resultLength = limit;
         } else {
-            resultLength = 7;
+            resultLength = items.length;
         }
-        String[] items = {
-                "Бладшот",
-                "Вперед",
-                "Отель «Белград»",
-                "Джентельмены",
-                "Человек-невидимка",
-                "Тролли. Мировой тур",
-                "Номер один"
-        };
-        FilmItem[] all = getItems();
-        FilmItem[] reversed = new FilmItem[all.length];
+
+        FilmItem[] reversed = new FilmItem[resultLength];
         for (int i = 0; i < reversed.length; i++) {
-            reversed[i] = all[all.length - 1 - resultLength];
+            reversed[i] = items[items.length - 1 - i];
         }
         return reversed;
     }
